@@ -33,10 +33,34 @@ class App extends Component {
 
   }
 
+  componentDidMount() {
+    const context = this.refs.canvas.getContext('2d');
+    this.setState({ context: context});
+    requestAnimationFrame(() => this.update());
+  }
+
+  update() {
+    this.clearBackground();
+  }
+
+  clearBackground() {
+    const context = this.state.context;
+    context.save();
+    context.scale(this.state.screen.ratio, this.state.screen.ratio);
+    context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
+    context.globalAlpha = 1;
+
+    const img = new Image();
+    img.src = '/images/tank-left.png';
+    img.onload = function() {
+      context.drawImage(img, 0, 0);
+    }
+  }
+
   render () {
     return (
       <div>
-        { this.state.gameState === GameState.StartScreen && <TitleScreen />}
+        
         <canvas ref="canvas"
           width={this.state.screen.width * this.state.screen.ratio}
           height={this.state.screen.height * this.state.screen.ratio}
