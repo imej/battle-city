@@ -43,7 +43,7 @@ class InputManager {
         keys.up = value;
         break;  
       case KEY.DOWN:
-      case KEY.W:
+      case KEY.S:
         keys.down = value;
         break;      
       case KEY.SPACE:
