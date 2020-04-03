@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
+import { SCREEN_WIDTH, SCREEN_HEIGHT, RATIO} from './utils/Constants';
+import InputManager from './utils/InputManager';
 import TitleScreen from './components/TitleScreen';
+import Tank from './components/Tank';
+import ImagesCache, {TANK_UP_REF, TANK_SIZE} from './components/ImagesCache';
 
-const SCREEN_WIDTH = 800;
-const SCREEN_HEIGHT = 800;
-const RATIO = window.devicePixelRatio || 1;
-
-const GameState = {
-  StartScreen: 0,
-  Playing: 1,
-  GameOver: 2
+const GAME_STATE = {
+  START_SCREEN: 0,
+  PLAYING: 1,
+  GAME_OVER: 2
 };
 
 class App extends Component {
@@ -17,6 +17,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      input: new InputManager(),
 
       screen: {
         width: SCREEN_WIDTH,
@@ -24,23 +25,71 @@ class App extends Component {
         ratio: RATIO
       },
 
-      gameState: GameState.StartScreen,
+      gameState: GAME_STATE.START_SCREEN,
 
       context: null,
 
       score: 0
     };
 
+    this.canvas = React.createRef();
+    
+    this.tank1 = null;
+    this.tank2 = null;
   }
 
   componentDidMount() {
-    const context = this.refs.canvas.getContext('2d');
-    this.setState({ context: context});
+    this.state.input.bindKeys();
+    const context = this.canvas.current.getContext('2d');
+    this.setState({ context: context });
     requestAnimationFrame(() => this.update());
   }
 
+  componentWillUnmount() {
+    this.state.input.unbindKeys();
+  }
+
   update() {
-    this.clearBackground();
+    const keys = this.state.input.pressedKeys;
+
+    switch(this.state.gameState) {
+      case GAME_STATE.START_SCREEN:
+        if (keys.enter) {
+          this.startGame();
+        }
+        break;
+      
+      case GAME_STATE.PLAYING:
+        this.clearBackground();
+
+        if (this.tank1) {
+          this.tank1.update(keys);
+          this.tank1.render(this.state);
+        }
+
+        break;
+      
+      case GAME_STATE.GAME_OVER:
+        break;  
+    }
+
+    requestAnimationFrame(() => this.update());
+  }
+
+  startGame() {
+    this.tank1 = new Tank({
+      radius: 70,
+      speed: 2.5,
+      position: {
+        x: this.state.screen.width/2 - TANK_SIZE - 100,
+        y: this.state.screen.height - TANK_SIZE 
+      }
+    });
+
+    this.setState({
+      gameState: GAME_STATE.PLAYING,
+      score: 0
+    });
   }
 
   clearBackground() {
@@ -49,19 +98,16 @@ class App extends Component {
     context.scale(this.state.screen.ratio, this.state.screen.ratio);
     context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
     context.globalAlpha = 1;
-
-    const img = new Image();
-    img.src = '/images/tank-left.png';
-    img.onload = function() {
-      context.drawImage(img, 0, 0);
-    }
   }
 
-  render () {
+  render() {
     return (
       <div>
-        
-        <canvas ref="canvas"
+        <ImagesCache />
+
+        { this.state.gameState === GAME_STATE.START_SCREEN && <TitleScreen /> }
+
+        <canvas ref={this.canvas}
           width={this.state.screen.width * this.state.screen.ratio}
           height={this.state.screen.height * this.state.screen.ratio}
         />  
