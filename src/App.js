@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import { SCREEN_WIDTH, SCREEN_HEIGHT, RATIO} from './utils/Constants';
+import { SCREEN_WIDTH, SCREEN_HEIGHT, RATIO, TANK_SIZE} from './utils/Constants';
 import InputManager from './utils/InputManager';
 import TitleScreen from './components/TitleScreen';
 import Tank from './components/Tank';
-import ImagesCache, {TANK_UP_REF, TANK_SIZE} from './components/ImagesCache';
+import ImagesCache from './components/ImagesCache';
+import AutoTankController from './components/AutoTankController';
 
 const GAME_STATE = {
   START_SCREEN: 0,
@@ -36,6 +37,8 @@ class App extends Component {
     
     this.tank1 = null;
     this.tank2 = null;
+
+    this.autoTankController = new AutoTankController();
   }
 
   componentDidMount() {
@@ -66,6 +69,9 @@ class App extends Component {
           this.tank1.update(keys);
           this.tank1.render(this.state);
         }
+
+        this.autoTankController.update();
+        this.autoTankController.render(this.state);
 
         break;
       

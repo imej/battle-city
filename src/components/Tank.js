@@ -1,20 +1,16 @@
 import { 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
-  RATIO,
-  DIRECTION
+  DIRECTION,
+  LOWEST_POSITION,
+  LONGEST_POSITION, 
+  TANK_SIZE
 } from '../utils/Constants';
 import {
   TANK_UP_REF, 
   TANK_DOWN_REF, 
   TANK_LEFT_REF, 
-  TANK_RIGHT_REF, 
-  TANK_SIZE
+  TANK_RIGHT_REF
 } from './ImagesCache';
 import Bullet from './Bullet';
-
-const LOWEST_POSITION = SCREEN_HEIGHT - TANK_SIZE;
-const LONGEST_POSITION = SCREEN_WIDTH - TANK_SIZE;
 
 class Tank {
   constructor({radius, speed, position}) {
