@@ -23,6 +23,7 @@ class AutoTank {
     this.lastTurn = 0;  // the time when this tank last makes a turn.
     this.lastShot = 0;
     this.bullets = [];
+    this.blocked = false;
   }
 
   onDie() {
@@ -44,7 +45,7 @@ class AutoTank {
    * It is allowed to move on the same direction for 4 sec
    */
   canGoforward() {
-    return !this.isBlocked() && (Date.now() - this.lastTurn < 4000);
+    return !this.blocked && !this.isAtEdge() && (Date.now() - this.lastTurn < 4000);
   }
 
   getDirection() {
@@ -95,6 +96,8 @@ class AutoTank {
       default:
 
     }
+
+    this.blocked = false;
   }
 
   renderBullets(state) {
