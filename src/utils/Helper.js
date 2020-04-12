@@ -58,5 +58,6 @@ const isTwoObjectsGettingCloser = (obj1, obj2) => {
 const isCrashed = (obj1, obj2) => isTwoObjectsTouch(obj1, obj2) && isTwoObjectsGettingCloser(obj1, obj2);
 
 export {
-  isCrashed
+  isCrashed,
+  isTwoObjectsTouch
 };

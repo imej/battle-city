@@ -6,6 +6,7 @@ import TitleScreen from './components/TitleScreen';
 import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
+import { isTwoObjectsTouch } from './utils/Helper';
 
 const GAME_STATE = {
   START_SCREEN: 0,
@@ -66,6 +67,7 @@ class App extends Component {
         this.clearBackground();
 
         if (this.tank1) {
+          this.checkCollision();
           this.tank1.update(keys);
           this.tank1.render(this.state);
         }
@@ -104,6 +106,20 @@ class App extends Component {
     context.scale(this.state.screen.ratio, this.state.screen.ratio);
     context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
     context.globalAlpha = 1;
+  }
+
+  checkCollision() {
+
+    // bullets of tank1 kills autotanks
+    for(let b of this.tank1.bullets) {
+      if (b.delete) continue;
+      for(let a of this.autoTankController.autoTanks) {
+        if (isTwoObjectsTouch(b, a)) {
+          b.die();
+          a.die();
+        }
+      }
+    }
   }
 
   render() {

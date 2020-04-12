@@ -26,7 +26,7 @@ class AutoTank {
     this.blocked = false;
   }
 
-  onDie() {
+  die() {
     this.delete = true;
   }
 
