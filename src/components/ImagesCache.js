@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const TANK_UP = "/images/tank-up.png";
 const TANK_DOWN = "/images/tank-down.png";

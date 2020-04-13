@@ -3,6 +3,7 @@ import './App.css';
 import { SCREEN_WIDTH, SCREEN_HEIGHT, RATIO, TANK_SIZE} from './utils/Constants';
 import InputManager from './utils/InputManager';
 import TitleScreen from './components/TitleScreen';
+import GameOver from './components/GameOver';
 import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
@@ -39,7 +40,11 @@ class App extends Component {
     this.tank1 = null;
     this.tank2 = null;
 
-    this.autoTankController = new AutoTankController();
+    this.autoTankController = new AutoTankController({
+      onAllDie: () => this.win()
+    });
+
+    this.congras = '';
   }
 
   componentDidMount() {
@@ -78,7 +83,10 @@ class App extends Component {
         break;
       
       case GAME_STATE.GAME_OVER:
-        break;  
+        break; 
+      
+      default:
+        // do nothing
     }
 
     requestAnimationFrame(() => this.update());
@@ -86,18 +94,32 @@ class App extends Component {
 
   startGame() {
     this.tank1 = new Tank({
-      radius: 70,
       speed: 2.5,
       position: {
         x: this.state.screen.width/2 - TANK_SIZE - 100,
         y: this.state.screen.height - TANK_SIZE 
-      }
+      },
+      onDie: () => this.lose()
     });
 
     this.setState({
       gameState: GAME_STATE.PLAYING,
       score: 0
     });
+  }
+
+  win() {
+    this.congras = 'You won!';
+    this.endGame();
+  }
+
+  lose() {
+    this.congras = 'You lost!'
+    this.endGame();
+  }
+
+  endGame() {
+    this.setState({gameState: GAME_STATE.GAME_OVER});
   }
 
   clearBackground() {
@@ -110,13 +132,25 @@ class App extends Component {
 
   checkCollision() {
 
-    // bullets of tank1 kills autotanks
+    // bullets of tank1 kill autotanks
     for(let b of this.tank1.bullets) {
       if (b.delete) continue;
       for(let a of this.autoTankController.autoTanks) {
         if (isTwoObjectsTouch(b, a)) {
           b.die();
           a.die();
+        }
+      }
+    }
+
+    // bullets of autotanks kill tank1
+    for(let auto of this.autoTankController.autoTanks) {
+      if (auto.delete) continue;
+      for (let bullet of auto.bullets) {
+        if (bullet.delete) continue;
+        if (isTwoObjectsTouch(bullet, this.tank1)) {
+          bullet.die();
+          this.tank1.die();
         }
       }
     }
@@ -128,6 +162,8 @@ class App extends Component {
         <ImagesCache />
 
         { this.state.gameState === GAME_STATE.START_SCREEN && <TitleScreen /> }
+
+        { this.state.gameState === GAME_STATE.GAME_OVER && <GameOver /> }
 
         <canvas ref={this.canvas}
           width={this.state.screen.width * this.state.screen.ratio}

@@ -2,7 +2,8 @@ import {
   DIRECTION,
   LOWEST_POSITION,
   LONGEST_POSITION, 
-  TANK_SIZE
+  COLOR,
+  TANK_RADIUS
 } from '../utils/Constants';
 import {
   TANK_UP_REF, 
@@ -11,21 +12,23 @@ import {
   TANK_RIGHT_REF
 } from './ImagesCache';
 import Bullet from './Bullet';
+import { getTankGunPosition } from '../utils/Helper';
 
 class Tank {
-  constructor({radius, speed, position}) {
+  constructor({speed, position, onDie}) {
     this.position = position;
     this.speed = speed;
-    this.radius = radius;
+    this.radius = TANK_RADIUS;
     this.direction = DIRECTION.UP;
     this.ref = TANK_UP_REF.current;
     this.delete = false;
     this.lastShot = 0;
     this.bullets = [];
+    this.onDie = onDie;
   }
 
   die() {
-    // this.onDie();
+    this.onDie();
   }
 
   update(keys) {
@@ -62,42 +65,15 @@ class Tank {
     if (keys.space && Date.now() - this.lastShot > 1000) {
       const bullet = new Bullet({
         radius: 2,
-        speed: 3.5,
-        position: this.getGunPosition(),
-        direction: this.direction
+        speed: 2,
+        position: getTankGunPosition(this),
+        direction: this.direction,
+        color: COLOR.YELLOW
       });
 
       this.bullets.push(bullet);
       this.lastShot = Date.now();
     }
-  }
-
-  getGunPosition() {
-    let x, y;
-
-    switch(this.direction) {
-      case DIRECTION.UP:
-        x = this.position.x + Math.round(TANK_SIZE / 2);
-        y = this.position.y;
-        break;
-      case DIRECTION.DOWN:
-        x = this.position.x + Math.round(TANK_SIZE / 2);
-        y = this.position.y + TANK_SIZE;
-        break;
-      case DIRECTION.LEFT:
-        x = this.position.x;
-        y = this.position.y + Math.round(TANK_SIZE / 2);
-        break;
-      case DIRECTION.RIGHT:
-        x = this.position.x + TANK_SIZE;
-        y = this.position.y + Math.round(TANK_SIZE / 2);
-        break;
-      default:
-        x = 0;
-        y = 0;           
-    }
-
-    return {x, y};
   }
 
   renderBullets(state) {

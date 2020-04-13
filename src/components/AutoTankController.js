@@ -10,10 +10,17 @@ const STARTING_POSITION = {
 };
 
 class AutoTankController {
-  constructor() {
+  constructor({ onAllDie }) {
     this.autoTanks = [];
     this.count = 0;
     this.lastProduction = 0;
+    this.allDie = onAllDie;
+  }
+
+  checkAllDie() {
+    if (this.count >= MAX_COUNT && this.autoTanks.length === 0) {
+      this.allDie();
+    }
   }
 
   canProduce() {
@@ -47,6 +54,7 @@ class AutoTankController {
   }
 
   update() {
+    this.checkAllDie();
     this.produce();
     let newTanks = [];
     for(let i=0;i<this.autoTanks.length;i++) {

@@ -51,7 +51,9 @@ class InputManager {
         break;
       case KEY.ENTER:
         keys.enter = value;
-        break;        
+        break; 
+      default:
+        // do nothing         
     }
 
     this.pressedKeys = keys;
