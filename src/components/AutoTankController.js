@@ -5,8 +5,8 @@ import { isCrashed } from '../utils/Helper';
 const MAX_COUNT = 20; // The maximum number of tanks will be generated.
 const PRODUCING_FREQUENCY = 5000; // The ms between each tank appears
 const STARTING_POSITION = {
-  x: Math.floor(SCREEN_WIDTH / 2 - TANK_SIZE / 2),
-  y: 0
+  x: Math.floor(SCREEN_WIDTH / 2),
+  y: TANK_SIZE / 2
 };
 
 class AutoTankController {

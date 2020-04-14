@@ -62,20 +62,20 @@ const getTankGunPosition = tank => {
 
   switch(tank.direction) {
     case DIRECTION.UP:
-      x = tank.position.x + Math.round(TANK_SIZE / 2);
-      y = tank.position.y;
+      x = tank.position.x;
+      y = tank.position.y - Math.round(TANK_SIZE / 2);
       break;
     case DIRECTION.DOWN:
-      x = tank.position.x + Math.round(TANK_SIZE / 2);
-      y = tank.position.y + TANK_SIZE;
-      break;
-    case DIRECTION.LEFT:
       x = tank.position.x;
       y = tank.position.y + Math.round(TANK_SIZE / 2);
       break;
+    case DIRECTION.LEFT:
+      x = tank.position.x - Math.round(TANK_SIZE / 2);
+      y = tank.position.y;
+      break;
     case DIRECTION.RIGHT:
-      x = tank.position.x + TANK_SIZE;
-      y = tank.position.y + Math.round(TANK_SIZE / 2);
+      x = tank.position.x + Math.round(TANK_SIZE / 2);
+      y = tank.position.y;
       break;
     default:
       x = 0;

@@ -96,8 +96,8 @@ class App extends Component {
     this.tank1 = new Tank({
       speed: 2.5,
       position: {
-        x: this.state.screen.width/2 - TANK_SIZE - 100,
-        y: this.state.screen.height - TANK_SIZE 
+        x: this.state.screen.width / 2 - TANK_SIZE / 2 - 100,
+        y: this.state.screen.height - TANK_SIZE / 2 
       },
       onDie: () => this.lose()
     });

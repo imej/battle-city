@@ -34,10 +34,10 @@ class AutoTank {
   }
 
   isAtEdge() {
-    return this.direction === DIRECTION.UP && this.position.y <= 0
-           || this.direction === DIRECTION.DOWN && this.position.y + TANK_SIZE >= SCREEN_HEIGHT
-           || this.direction === DIRECTION.LEFT && this.position.x <= 0
-           || this.direction === DIRECTION.RIGHT && this.position.x + TANK_SIZE >= SCREEN_WIDTH;
+    return this.direction === DIRECTION.UP && this.position.y <= TANK_SIZE / 2
+           || this.direction === DIRECTION.DOWN && this.position.y + TANK_SIZE / 2 >= SCREEN_HEIGHT
+           || this.direction === DIRECTION.LEFT && this.position.x <= TANK_SIZE / 2
+           || this.direction === DIRECTION.RIGHT && this.position.x + TANK_SIZE / 2 >= SCREEN_WIDTH;
   }
 
   /**
@@ -129,7 +129,7 @@ class AutoTank {
   render(state) {
     const context = state.context;
     
-    context.drawImage(this.ref, this.position.x, this.position.y);
+    context.drawImage(this.ref, this.position.x - TANK_SIZE / 2, this.position.y - TANK_SIZE / 2);
 
     this.renderBullets(state);
   }

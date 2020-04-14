@@ -3,7 +3,8 @@ import {
   LOWEST_POSITION,
   LONGEST_POSITION, 
   COLOR,
-  TANK_RADIUS
+  TANK_RADIUS,
+  TANK_SIZE
 } from '../utils/Constants';
 import {
   TANK_UP_REF, 
@@ -36,8 +37,8 @@ class Tank {
       this.direction = DIRECTION.UP;
       this.ref = TANK_UP_REF.current;
       this.position.y = this.position.y - this.speed; 
-      if (this.position.y < 0) {
-        this.position.y = 0;
+      if (this.position.y < TANK_SIZE / 2) {
+        this.position.y = TANK_SIZE / 2;
       }
     } else if (keys.down) {
       this.direction = DIRECTION.DOWN;
@@ -50,8 +51,8 @@ class Tank {
       this.direction = DIRECTION.LEFT;
       this.ref = TANK_LEFT_REF.current;
       this.position.x = this.position.x - this.speed;
-      if (this.position.x < 0) {
-        this.position.x = 0;
+      if (this.position.x < TANK_SIZE / 2) {
+        this.position.x = TANK_SIZE / 2;
       }
     } else if (keys.right) {
       this.direction = DIRECTION.RIGHT;
@@ -91,7 +92,7 @@ class Tank {
   render(state) {
     const context = state.context;
     
-    context.drawImage(this.ref, this.position.x, this.position.y);
+    context.drawImage(this.ref, this.position.x - TANK_SIZE / 2, this.position.y - TANK_SIZE / 2);
 
     this.renderBullets(state);
   }
