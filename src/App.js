@@ -163,7 +163,7 @@ class App extends Component {
 
         { this.state.gameState === GAME_STATE.START_SCREEN && <TitleScreen /> }
 
-        { this.state.gameState === GAME_STATE.GAME_OVER && <GameOver /> }
+        { this.state.gameState === GAME_STATE.GAME_OVER && <GameOver msg={this.congras} /> }
 
         <canvas ref={this.canvas}
           width={this.state.screen.width * this.state.screen.ratio}
