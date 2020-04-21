@@ -8,6 +8,7 @@ import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
 import { isTwoObjectsTouch } from './utils/Helper';
+import Map from './components/Map';
 
 const GAME_STATE = {
   START_SCREEN: 0,
@@ -36,6 +37,8 @@ class App extends Component {
     };
 
     this.canvas = React.createRef();
+
+    this.map = null;
     
     this.tank1 = null;
     this.tank2 = null;
@@ -71,6 +74,8 @@ class App extends Component {
       case GAME_STATE.PLAYING:
         this.clearBackground();
 
+        this.map.render(this.state);
+
         if (this.tank1) {
           this.checkCollision();
           this.tank1.update(keys);
@@ -93,6 +98,8 @@ class App extends Component {
   }
 
   startGame() {
+    this.map = new Map();
+
     this.tank1 = new Tank({
       speed: 2.5,
       position: {
