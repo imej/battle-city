@@ -1,10 +1,8 @@
 import { 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
   DIRECTION, 
-  TANK_SIZE,
-  TANK_RADIUS,
-  COLOR
+  COLOR,
+  LOWEST_POSITION,
+  LONGEST_POSITION
 } from '../utils/Constants';
 import {
   AUTO_TANK_UP_REF, 
@@ -19,7 +17,6 @@ class AutoTank {
   constructor({speed, position}) {
     this.position = position;
     this.speed = speed;
-    this.radius = TANK_RADIUS;
     this.direction = DIRECTION.UP;
     this.ref =   AUTO_TANK_UP_REF.current;
     this.delete = false;
@@ -34,10 +31,17 @@ class AutoTank {
   }
 
   isAtEdge() {
-    return this.direction === DIRECTION.UP && this.position.y <= TANK_SIZE / 2
-           || this.direction === DIRECTION.DOWN && this.position.y + TANK_SIZE / 2 >= SCREEN_HEIGHT
-           || this.direction === DIRECTION.LEFT && this.position.x <= TANK_SIZE / 2
-           || this.direction === DIRECTION.RIGHT && this.position.x + TANK_SIZE / 2 >= SCREEN_WIDTH;
+    if (this.direction === DIRECTION.UP && this.position.y <= 0) {
+      return true;
+    } else if (this.direction === DIRECTION.DOWN && this.position.y >= LOWEST_POSITION) {
+      return true;
+    } else if (this.direction === DIRECTION.LEFT && this.position.x <= 0) {
+      return true
+    } else if (this.direction === DIRECTION.RIGHT && this.position.x >= LONGEST_POSITION) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -75,7 +79,6 @@ class AutoTank {
   shoot() {
     if (Date.now() - this.lastShot > 5000) {
       const bullet = new Bullet({
-        radius: 2,
         speed: 1.5,
         position: getTankGunPosition(this),
         direction: this.direction,
@@ -129,7 +132,7 @@ class AutoTank {
   render(state) {
     const context = state.context;
     
-    context.drawImage(this.ref, this.position.x - TANK_SIZE / 2, this.position.y - TANK_SIZE / 2);
+    context.drawImage(this.ref, this.position.x, this.position.y);
 
     this.renderBullets(state);
   }

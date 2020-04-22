@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
-import { SCREEN_WIDTH, SCREEN_HEIGHT, RATIO, TANK_SIZE} from './utils/Constants';
+import { 
+  SCREEN_WIDTH, 
+  SCREEN_HEIGHT, 
+  RATIO, 
+  LOWEST_POSITION
+} from './utils/Constants';
 import InputManager from './utils/InputManager';
 import TitleScreen from './components/TitleScreen';
 import GameOver from './components/GameOver';
 import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
-import { isTwoObjectsTouch } from './utils/Helper';
+import { isBulletTankCrashed } from './utils/Helper';
 import Map from './components/Map';
 
 const GAME_STATE = {
@@ -103,8 +108,8 @@ class App extends Component {
     this.tank1 = new Tank({
       speed: 2.5,
       position: {
-        x: this.state.screen.width / 2 - TANK_SIZE / 2 - 100,
-        y: this.state.screen.height - TANK_SIZE / 2 
+        x: this.state.screen.width / 2 - 100,
+        y: LOWEST_POSITION
       },
       onDie: () => this.lose()
     });
@@ -143,7 +148,7 @@ class App extends Component {
     for(let b of this.tank1.bullets) {
       if (b.delete) continue;
       for(let a of this.autoTankController.autoTanks) {
-        if (isTwoObjectsTouch(b, a)) {
+        if (isBulletTankCrashed(b, a)) {
           b.die();
           a.die();
         }
@@ -155,7 +160,7 @@ class App extends Component {
       if (auto.delete) continue;
       for (let bullet of auto.bullets) {
         if (bullet.delete) continue;
-        if (isTwoObjectsTouch(bullet, this.tank1)) {
+        if (isBulletTankCrashed(bullet, this.tank1)) {
           bullet.die();
           this.tank1.die();
         }

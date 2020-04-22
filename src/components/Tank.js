@@ -2,9 +2,7 @@ import {
   DIRECTION,
   LOWEST_POSITION,
   LONGEST_POSITION, 
-  COLOR,
-  TANK_RADIUS,
-  TANK_SIZE
+  COLOR
 } from '../utils/Constants';
 import {
   TANK_UP_REF, 
@@ -19,7 +17,6 @@ class Tank {
   constructor({speed, position, onDie}) {
     this.position = position;
     this.speed = speed;
-    this.radius = TANK_RADIUS;
     this.direction = DIRECTION.UP;
     this.ref = TANK_UP_REF.current;
     this.delete = false;
@@ -37,8 +34,8 @@ class Tank {
       this.direction = DIRECTION.UP;
       this.ref = TANK_UP_REF.current;
       this.position.y = this.position.y - this.speed; 
-      if (this.position.y < TANK_SIZE / 2) {
-        this.position.y = TANK_SIZE / 2;
+      if (this.position.y < 0) {
+        this.position.y = 0;
       }
     } else if (keys.down) {
       this.direction = DIRECTION.DOWN;
@@ -51,8 +48,8 @@ class Tank {
       this.direction = DIRECTION.LEFT;
       this.ref = TANK_LEFT_REF.current;
       this.position.x = this.position.x - this.speed;
-      if (this.position.x < TANK_SIZE / 2) {
-        this.position.x = TANK_SIZE / 2;
+      if (this.position.x < 0) {
+        this.position.x = 0;
       }
     } else if (keys.right) {
       this.direction = DIRECTION.RIGHT;
@@ -65,7 +62,6 @@ class Tank {
 
     if (keys.space && Date.now() - this.lastShot > 1000) {
       const bullet = new Bullet({
-        radius: 2,
         speed: 2,
         position: getTankGunPosition(this),
         direction: this.direction,
@@ -92,7 +88,7 @@ class Tank {
   render(state) {
     const context = state.context;
     
-    context.drawImage(this.ref, this.position.x - TANK_SIZE / 2, this.position.y - TANK_SIZE / 2);
+    context.drawImage(this.ref, this.position.x, this.position.y);
 
     this.renderBullets(state);
   }

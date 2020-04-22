@@ -8,11 +8,11 @@ export const TANK_SIZE = 50;
 
 export const BLOCK_SIZE = 25;
 
-export const TANK_RADIUS = Math.round(Math.sqrt(50 * 50 * 2) / 2); 
+export const BULLET_SIZE = 5;
 
-export const LOWEST_POSITION = SCREEN_HEIGHT - TANK_SIZE / 2;
+export const LOWEST_POSITION = SCREEN_HEIGHT - TANK_SIZE;
 
-export const LONGEST_POSITION = SCREEN_WIDTH - TANK_SIZE / 2;
+export const LONGEST_POSITION = SCREEN_WIDTH - TANK_SIZE;
 
 export const DIRECTION = {
   UP: 0,

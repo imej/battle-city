@@ -1,13 +1,9 @@
-import { DIRECTION } from '../utils/Constants';
-
-const WHITE = '#fff';
-const YELLOW = '#ff0';
+import { DIRECTION, BULLET_SIZE } from '../utils/Constants';
 
 class Bullet {
-  constructor({radius, speed, position, direction, color}) {
+  constructor({speed, position, direction, color}) {
     this.position = position;
     this.speed = speed;
-    this.radius = radius;
     this.delete = false;
     this.direction = direction;
     this.color = color;
@@ -46,10 +42,8 @@ class Bullet {
     context.save();
     context.translate(this.position.x, this.position.y);
     context.fillStyle = this.color;
-    context.lineWidth = 0.5;
     context.beginPath();
-    context.arc(0, 0, this.radius, 0, 2 * Math.PI);
-    context.closePath();
+    context.rect(0, 0, BULLET_SIZE, BULLET_SIZE);
     context.fill();
     context.restore();
   }

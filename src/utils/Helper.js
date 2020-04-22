@@ -1,16 +1,29 @@
-import { DIRECTION, LOWEST_POSITION, LONGEST_POSITION,TANK_SIZE } from './Constants';
+import { 
+  DIRECTION, 
+  LOWEST_POSITION, 
+  LONGEST_POSITION,
+  TANK_SIZE, 
+  BULLET_SIZE
+} from './Constants';
+
+const isRectanglesCrashed = (rect1, rect2) =>
+  rect1.x < rect2.x + rect2.width &&
+  rect1.x + rect1.width > rect2.x &&
+  rect1.y < rect2.y + rect2.height &&
+  rect1.y + rect1.height > rect2.y;
+
+const isTankTankCrashed = (tank1, tank2) => 
+  isRectanglesCrashed({x: tank1.position.x, y: tank1.position.y, width: TANK_SIZE, height: TANK_SIZE},
+    {x: tank2.position.x, y: tank2.position.y, width: TANK_SIZE, height: TANK_SIZE});
+
+const isBulletTankCrashed = (bullet, tank) => 
+  isRectanglesCrashed({x: bullet.position.x, y: bullet.position.y, width: BULLET_SIZE, height: BULLET_SIZE},
+    {x: tank.position.x, y: tank.position.y, width: TANK_SIZE, height: TANK_SIZE});
 
 const getDistanceOfTwoPositions = (po1, po2) => {
   const vx = po1.x - po2.x;
   const vy = po1.y - po2.y;
   return Math.sqrt(vx * vx + vy * vy);
-}
-
-const isTwoObjectsTouch = (obj1, obj2) => {
-  const po1 = obj1.position;
-  const po2 = obj2.position;
-  const distance = getDistanceOfTwoPositions(po1, po2);
-  return distance < obj1.radius + obj2.radius;
 }
 
 /**
@@ -55,27 +68,25 @@ const isTwoObjectsGettingCloser = (obj1, obj2) => {
   return currentDistance > futureDistance;
 }
 
-const isCrashed = (obj1, obj2) => isTwoObjectsTouch(obj1, obj2) && isTwoObjectsGettingCloser(obj1, obj2);
-
 const getTankGunPosition = tank => {
   let x, y;
 
   switch(tank.direction) {
     case DIRECTION.UP:
-      x = tank.position.x;
-      y = tank.position.y - Math.round(TANK_SIZE / 2);
+      x = tank.position.x + TANK_SIZE/2;
+      y = tank.position.y;
       break;
     case DIRECTION.DOWN:
-      x = tank.position.x;
-      y = tank.position.y + Math.round(TANK_SIZE / 2);
+      x = tank.position.x + TANK_SIZE/2;
+      y = tank.position.y + TANK_SIZE;
       break;
     case DIRECTION.LEFT:
-      x = tank.position.x - Math.round(TANK_SIZE / 2);
-      y = tank.position.y;
+      x = tank.position.x;
+      y = tank.position.y + TANK_SIZE/2;
       break;
     case DIRECTION.RIGHT:
-      x = tank.position.x + Math.round(TANK_SIZE / 2);
-      y = tank.position.y;
+      x = tank.position.x + TANK_SIZE;
+      y = tank.position.y + TANK_SIZE/2;
       break;
     default:
       x = 0;
@@ -85,7 +96,6 @@ const getTankGunPosition = tank => {
   return {x, y};
 }
 export {
-  isCrashed,
-  isTwoObjectsTouch,
-  getTankGunPosition
+  getTankGunPosition,
+  isBulletTankCrashed
 };
