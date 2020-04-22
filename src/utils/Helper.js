@@ -97,5 +97,6 @@ const getTankGunPosition = tank => {
 }
 export {
   getTankGunPosition,
-  isBulletTankCrashed
+  isBulletTankCrashed,
+  isTankTankCrashed
 };

@@ -12,7 +12,10 @@ import GameOver from './components/GameOver';
 import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
-import { isBulletTankCrashed } from './utils/Helper';
+import { 
+  isBulletTankCrashed,
+  isTankTankCrashed
+} from './utils/Helper';
 import Map from './components/Map';
 
 const GAME_STATE = {
@@ -155,15 +158,22 @@ class App extends Component {
       }
     }
 
-    // bullets of autotanks kill tank1
+    // autotanks kill tank1
     for(let auto of this.autoTankController.autoTanks) {
       if (auto.delete) continue;
+
+      // shoot tank1
       for (let bullet of auto.bullets) {
         if (bullet.delete) continue;
         if (isBulletTankCrashed(bullet, this.tank1)) {
           bullet.die();
           this.tank1.die();
         }
+      }
+
+      // crash tank1
+      if (isTankTankCrashed(auto, this.tank1)) {
+        this.tank1.die();
       }
     }
   }
