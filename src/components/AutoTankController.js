@@ -9,11 +9,12 @@ const STARTING_POSITION = {
 };
 
 class AutoTankController {
-  constructor({ onAllDie }) {
+  constructor({ onAllDie, map }) {
     this.autoTanks = [];
     this.count = 0;
     this.lastProduction = 0;
     this.allDie = onAllDie;
+    this.map = map;
   }
 
   checkAllDie() {
@@ -52,7 +53,7 @@ class AutoTankController {
       if (!currentTank.delete) {
         newTanks.push(currentTank);
         
-        currentTank.update();
+        currentTank.update(this.map);
       }
     }
 

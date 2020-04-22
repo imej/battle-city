@@ -3,7 +3,8 @@ import {
   LOWEST_POSITION, 
   LONGEST_POSITION,
   TANK_SIZE, 
-  BULLET_SIZE
+  BULLET_SIZE,
+  BLOCK_SIZE
 } from './Constants';
 
 const isRectanglesCrashed = (rect1, rect2) =>
@@ -19,6 +20,10 @@ const isTankTankCrashed = (tank1, tank2) =>
 const isBulletTankCrashed = (bullet, tank) => 
   isRectanglesCrashed({x: bullet.position.x, y: bullet.position.y, width: BULLET_SIZE, height: BULLET_SIZE},
     {x: tank.position.x, y: tank.position.y, width: TANK_SIZE, height: TANK_SIZE});
+
+const isTankBlockCrashed = (tank, block) => 
+  isRectanglesCrashed({x: tank.position.x, y: tank.position.y, width: TANK_SIZE, height: TANK_SIZE},
+    {x: block.position.x, y: block.position.y, width: BLOCK_SIZE, height: BLOCK_SIZE});
 
 const getDistanceOfTwoPositions = (po1, po2) => {
   const vx = po1.x - po2.x;
@@ -95,8 +100,18 @@ const getTankGunPosition = tank => {
 
   return {x, y};
 }
+
+const isTankBlocked = (tank, map) => {
+  if (!map || !map.items || map.items.length === 0) {
+    return false;
+  }
+
+  return map.items.some(block => isTankBlockCrashed(tank, block));
+}
+
 export {
   getTankGunPosition,
   isBulletTankCrashed,
-  isTankTankCrashed
+  isTankTankCrashed,
+  isTankBlocked
 };

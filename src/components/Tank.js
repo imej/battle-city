@@ -11,7 +11,10 @@ import {
   TANK_RIGHT_REF
 } from './ImagesCache';
 import Bullet from './Bullet';
-import { getTankGunPosition } from '../utils/Helper';
+import { 
+  getTankGunPosition,
+  isTankBlocked
+} from '../utils/Helper';
 
 class Tank {
   constructor({speed, position, onDie}) {
@@ -29,32 +32,44 @@ class Tank {
     this.onDie();
   }
 
-  update(keys) {
+  update(keys, map) {
     if (keys.up) {
       this.direction = DIRECTION.UP;
       this.ref = TANK_UP_REF.current;
-      this.position.y = this.position.y - this.speed; 
+      this.position.y -= this.speed; 
+      if (isTankBlocked(this, map)) {
+        this.position.y += this.speed; 
+      }
       if (this.position.y < 0) {
         this.position.y = 0;
       }
     } else if (keys.down) {
       this.direction = DIRECTION.DOWN;
       this.ref = TANK_DOWN_REF.current;
-      this.position.y = this.position.y + this.speed;
+      this.position.y += this.speed;
+      if (isTankBlocked(this, map)) {
+        this.position.y -= this.speed; 
+      }
       if (this.position.y > LOWEST_POSITION) {
         this.position.y = LOWEST_POSITION;
       }
     } else if (keys.left) {
       this.direction = DIRECTION.LEFT;
       this.ref = TANK_LEFT_REF.current;
-      this.position.x = this.position.x - this.speed;
+      this.position.x -= this.speed;
+      if (isTankBlocked(this, map)) {
+        this.position.x += this.speed; 
+      }
       if (this.position.x < 0) {
         this.position.x = 0;
       }
     } else if (keys.right) {
       this.direction = DIRECTION.RIGHT;
       this.ref = TANK_RIGHT_REF.current;
-      this.position.x = this.position.x + this.speed;
+      this.position.x += this.speed;
+      if (isTankBlocked(this, map)) {
+        this.position.x -= this.speed; 
+      }
       if (this.position.x > LONGEST_POSITION) {
         this.position.x = LONGEST_POSITION;
       }

@@ -51,9 +51,7 @@ class App extends Component {
     this.tank1 = null;
     this.tank2 = null;
 
-    this.autoTankController = new AutoTankController({
-      onAllDie: () => this.win()
-    });
+    this.autoTankController = null;
 
     this.congras = '';
   }
@@ -86,7 +84,7 @@ class App extends Component {
 
         if (this.tank1) {
           this.checkCollision();
-          this.tank1.update(keys);
+          this.tank1.update(keys, this.map);
           this.tank1.render(this.state);
         }
 
@@ -115,6 +113,11 @@ class App extends Component {
         y: LOWEST_POSITION
       },
       onDie: () => this.lose()
+    });
+
+    this.autoTankController = new AutoTankController({
+      onAllDie: () => this.win(),
+      map: this.map
     });
 
     this.setState({

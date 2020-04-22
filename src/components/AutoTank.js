@@ -11,7 +11,10 @@ import {
   AUTO_TANK_RIGHT_REF
 } from './ImagesCache';
 import Bullet from './Bullet';
-import { getTankGunPosition } from '../utils/Helper';
+import { 
+  getTankGunPosition,
+  isTankBlocked
+} from '../utils/Helper';
 
 class AutoTank {
   constructor({speed, position}) {
@@ -73,6 +76,7 @@ class AutoTank {
     }
     
     this.lastTurn = Date.now();
+    this.blocked = false;
     return newDirection;
   }
 
@@ -89,7 +93,7 @@ class AutoTank {
     }
   }
 
-  update() {
+  update(map) {
     this.shoot();
     this.direction = this.getDirection();
 
@@ -97,24 +101,38 @@ class AutoTank {
       case DIRECTION.UP:
         this.ref = AUTO_TANK_UP_REF.current;
         this.position.y -= this.speed;
+        if (isTankBlocked(this, map)) {
+          this.position.y += this.speed;
+          this.blocked = true;
+        }
         break;
       case DIRECTION.DOWN:
         this.ref = AUTO_TANK_DOWN_REF.current;
         this.position.y += this.speed;
+        if (isTankBlocked(this, map)) {
+          this.position.y -= this.speed;
+          this.blocked = true;
+        }
         break;
       case DIRECTION.LEFT:
         this.ref = AUTO_TANK_LEFT_REF.current;
         this.position.x -= this.speed;
+        if (isTankBlocked(this, map)) {
+          this.position.x += this.speed;
+          this.blocked = true;
+        }
         break;
       case DIRECTION.RIGHT:
         this.ref = AUTO_TANK_RIGHT_REF.current;
         this.position.x += this.speed;
+        if (isTankBlocked(this, map)) {
+          this.position.x -= this.speed;
+          this.blocked = true;
+        }
         break;
       default:
 
     }
-
-    this.blocked = false;
   }
 
   renderBullets(state) {
