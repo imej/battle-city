@@ -145,7 +145,7 @@ class AutoTank {
     this.bullets.forEach(b => {
       if (!b.delete && isBulletTankCrashed(b, tank)) {
         b.die();
-        this.tank.die();
+        tank.die();
       }
 
       if (!b.delete) {
