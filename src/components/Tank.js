@@ -13,7 +13,9 @@ import {
 import Bullet from './Bullet';
 import { 
   getTankGunPosition,
-  isTankBlocked
+  isTankBlocked,
+  isBulletTankCrashed,
+  isBulletBlockCrashed
 } from '../utils/Helper';
 
 class Tank {
@@ -32,7 +34,7 @@ class Tank {
     this.onDie();
   }
 
-  update(keys, map) {
+  update(keys, map, autoTanks) {
     if (keys.up) {
       this.direction = DIRECTION.UP;
       this.ref = TANK_UP_REF.current;
@@ -86,6 +88,26 @@ class Tank {
       this.bullets.push(bullet);
       this.lastShot = Date.now();
     }
+
+    this.bullets.forEach(b => {
+      if (!b.delete) {
+        autoTanks.forEach(a => {
+          if (isBulletTankCrashed(b, a)) {
+            b.die();
+            a.die();
+          }
+        })
+      }
+      
+      if (!b.delete) {
+        map.items.forEach(i => {
+          if (isBulletBlockCrashed(b, i)) {
+            b.die();
+            i.die();
+          }
+        })  
+      }
+    });
   }
 
   renderBullets(state) {

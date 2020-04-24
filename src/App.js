@@ -12,11 +12,6 @@ import GameOver from './components/GameOver';
 import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
-import { 
-  isBulletTankCrashed,
-  isTankTankCrashed,
-  isBulletBlockCrashed
-} from './utils/Helper';
 import Map from './components/Map';
 
 const GAME_STATE = {
@@ -85,8 +80,7 @@ class App extends Component {
         this.map.render(this.state);
 
         if (this.tank1) {
-          this.checkCollision();
-          this.tank1.update(keys, this.map);
+          this.tank1.update(keys, this.map, this.autoTankController.autoTanks);
           this.tank1.render(this.state);
         }
 
@@ -119,7 +113,8 @@ class App extends Component {
 
     this.autoTankController = new AutoTankController({
       onAllDie: () => this.win(),
-      map: this.map
+      map: this.map,
+      tank: this.tank1
     });
 
     this.setState({
@@ -148,55 +143,6 @@ class App extends Component {
     context.scale(this.state.screen.ratio, this.state.screen.ratio);
     context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
     context.globalAlpha = 1;
-  }
-
-  checkCollision() {
-
-    // bullets of tank1 kill autotanks
-    for(let b of this.tank1.bullets) {
-      if (b.delete) continue;
-      for(let a of this.autoTankController.autoTanks) {
-        if (isBulletTankCrashed(b, a)) {
-          b.die();
-          a.die();
-        }
-      }
-
-      if (b.delete) continue;
-      this.map.items.forEach(item => {
-        if (isBulletBlockCrashed(b, item)) {
-          b.die();
-          item.die();
-        }
-      });
-    }
-
-    // autotanks kill tank1
-    for(let auto of this.autoTankController.autoTanks) {
-      if (auto.delete) continue;
-
-      // shoot tank1
-      for (let bullet of auto.bullets) {
-        if (bullet.delete) continue;
-        if (isBulletTankCrashed(bullet, this.tank1)) {
-          bullet.die();
-          this.tank1.die();
-        }
-
-        if (bullet.delete) continue;
-        this.map.items.forEach(item => {
-          if (isBulletBlockCrashed(bullet, item)) {
-            bullet.die();
-            item.die();
-          }
-        });
-      }
-
-      // crash tank1
-      if (isTankTankCrashed(auto, this.tank1)) {
-        this.tank1.die();
-      }
-    }
   }
 
   render() {

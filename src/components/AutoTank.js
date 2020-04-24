@@ -13,7 +13,10 @@ import {
 import Bullet from './Bullet';
 import { 
   getTankGunPosition,
-  isTankBlocked
+  isTankBlocked,
+  isBulletBlockCrashed,
+  isBulletTankCrashed,
+  isTankTankCrashed
 } from '../utils/Helper';
 
 class AutoTank {
@@ -93,7 +96,7 @@ class AutoTank {
     }
   }
 
-  update(map) {
+  update(map, tank) {
     this.shoot();
     this.direction = this.getDirection();
 
@@ -133,6 +136,27 @@ class AutoTank {
       default:
 
     }
+
+    if (isTankTankCrashed(this, tank)) {
+      tank.die();
+      this.die();
+    }
+
+    this.bullets.forEach(b => {
+      if (!b.delete && isBulletTankCrashed(b, tank)) {
+        b.die();
+        this.tank.die();
+      }
+
+      if (!b.delete) {
+        map.items.forEach(i => {
+          if (isBulletBlockCrashed(b, i)) {
+            b.die();
+            i.die();
+          }
+        })
+      }
+    });
   }
 
   renderBullets(state) {
