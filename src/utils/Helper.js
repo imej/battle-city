@@ -25,6 +25,10 @@ const isTankBlockCrashed = (tank, block) =>
   isRectanglesCrashed({x: tank.position.x, y: tank.position.y, width: TANK_SIZE, height: TANK_SIZE},
     {x: block.position.x, y: block.position.y, width: BLOCK_SIZE, height: BLOCK_SIZE});
 
+const isBulletBlockCrashed = (bullet, block) => 
+  isRectanglesCrashed({x: bullet.position.x, y: bullet.position.y, width: BULLET_SIZE, height: BULLET_SIZE},
+    {x: block.position.x, y: block.position.y, width: BLOCK_SIZE, height: BLOCK_SIZE});    
+
 const getDistanceOfTwoPositions = (po1, po2) => {
   const vx = po1.x - po2.x;
   const vy = po1.y - po2.y;
@@ -113,5 +117,6 @@ export {
   getTankGunPosition,
   isBulletTankCrashed,
   isTankTankCrashed,
+  isBulletBlockCrashed,
   isTankBlocked
 };

@@ -14,7 +14,8 @@ import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
 import { 
   isBulletTankCrashed,
-  isTankTankCrashed
+  isTankTankCrashed,
+  isBulletBlockCrashed
 } from './utils/Helper';
 import Map from './components/Map';
 
@@ -80,6 +81,7 @@ class App extends Component {
       case GAME_STATE.PLAYING:
         this.clearBackground();
 
+        this.map.update();
         this.map.render(this.state);
 
         if (this.tank1) {
@@ -159,6 +161,14 @@ class App extends Component {
           a.die();
         }
       }
+
+      if (b.delete) continue;
+      this.map.items.forEach(item => {
+        if (isBulletBlockCrashed(b, item)) {
+          b.die();
+          item.die();
+        }
+      });
     }
 
     // autotanks kill tank1
@@ -172,6 +182,14 @@ class App extends Component {
           bullet.die();
           this.tank1.die();
         }
+
+        if (bullet.delete) continue;
+        this.map.items.forEach(item => {
+          if (isBulletBlockCrashed(bullet, item)) {
+            bullet.die();
+            item.die();
+          }
+        });
       }
 
       // crash tank1

@@ -78,6 +78,18 @@ class Map {
     return wall;
   }
 
+  update() {
+    let newItems = [];
+    for (let i=0;i<this.items.length;i++) {
+      let item = this.items[i];
+      if (!item.delete) {
+        newItems.push(item);
+      }
+    }
+
+    this.items = newItems;
+  }
+
   render(state) {
     this.items.forEach(item => item.render(state));
   }

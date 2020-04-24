@@ -2,10 +2,11 @@ class Block {
   constructor({position}) {
     this.position = position;
     this.delete = false;
+    this.breakable = true;
   }
 
   die() {
-    this.delete = true;
+    this.delete = this.breakable ? true : false;
   }
 
   render(state) {
