@@ -10,6 +10,14 @@ export const BLOCK_SIZE = 25;
 
 export const BULLET_SIZE = 5;
 
+export const AUTO_TANK_SPEED = 1.5;
+
+export const BULLET_SPEED = 3;
+
+export const TANK_SHOOT_FREQUENCY = 500; //ms
+
+export const AUTOTANK_SHOOT_FREQUENCY = 2500; //ms
+
 export const LOWEST_POSITION = SCREEN_HEIGHT - TANK_SIZE;
 
 export const LONGEST_POSITION = SCREEN_WIDTH - TANK_SIZE;

@@ -1,12 +1,17 @@
 import AutoTank from './AutoTank';
-import { SCREEN_WIDTH, TANK_SIZE } from '../utils/Constants';
+import { 
+  SCREEN_WIDTH, 
+  TANK_SIZE,
+  AUTO_TANK_SPEED
+} from '../utils/Constants';
 
 const MAX_COUNT = 20; // The maximum number of tanks will be generated.
 const PRODUCING_FREQUENCY = 5000; // The ms between each tank appears
-const STARTING_POSITION = {
-  x: Math.floor(SCREEN_WIDTH / 2 - TANK_SIZE / 2),
-  y: 0
-};
+const STARTING_POSITION = [
+  { x: SCREEN_WIDTH / 2 - TANK_SIZE / 2, y: 0 }, // center
+  { x: SCREEN_WIDTH - TANK_SIZE, y: 0 }, // right
+  { x: 0, y: 0 } // left
+];
 
 class AutoTankController {
   constructor({ onAllDie, map, tank }) {
@@ -34,9 +39,11 @@ class AutoTankController {
       return;
     }
 
+    const nextPosition = STARTING_POSITION[this.count % 3];
+
     const newTank = new AutoTank({
-      speed: 0.5, 
-      position: { x: STARTING_POSITION.x, y: STARTING_POSITION.y }
+      speed: AUTO_TANK_SPEED, 
+      position: { x: nextPosition.x, y: nextPosition.y }
     });
 
     this.autoTanks.push(newTank);

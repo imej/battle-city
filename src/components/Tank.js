@@ -2,7 +2,9 @@ import {
   DIRECTION,
   LOWEST_POSITION,
   LONGEST_POSITION, 
-  COLOR
+  COLOR,
+  BULLET_SPEED,
+  TANK_SHOOT_FREQUENCY
 } from '../utils/Constants';
 import {
   TANK_UP_REF, 
@@ -77,9 +79,9 @@ class Tank {
       }
     }
 
-    if (keys.space && Date.now() - this.lastShot > 1000) {
+    if (keys.space && Date.now() - this.lastShot > TANK_SHOOT_FREQUENCY) {
       const bullet = new Bullet({
-        speed: 2,
+        speed: BULLET_SPEED,
         position: getTankGunPosition(this),
         direction: this.direction,
         color: COLOR.YELLOW

@@ -2,7 +2,9 @@ import {
   DIRECTION, 
   COLOR,
   LOWEST_POSITION,
-  LONGEST_POSITION
+  LONGEST_POSITION,
+  BULLET_SPEED,
+  AUTOTANK_SHOOT_FREQUENCY
 } from '../utils/Constants';
 import {
   AUTO_TANK_UP_REF, 
@@ -54,7 +56,7 @@ class AutoTank {
    * It is allowed to move on the same direction for 4 sec
    */
   canGoforward() {
-    return !this.blocked && !this.isAtEdge() && (Date.now() - this.lastTurn < 4000);
+    return !this.blocked && !this.isAtEdge() && (Date.now() - this.lastTurn < 2000);
   }
 
   getDirection() {
@@ -84,9 +86,9 @@ class AutoTank {
   }
 
   shoot() {
-    if (Date.now() - this.lastShot > 5000) {
+    if (Date.now() - this.lastShot > AUTOTANK_SHOOT_FREQUENCY) {
       const bullet = new Bullet({
-        speed: 1.5,
+        speed: BULLET_SPEED,
         position: getTankGunPosition(this),
         direction: this.direction,
         color: COLOR.WHITE

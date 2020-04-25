@@ -2,7 +2,9 @@ import {
   DIRECTION, 
   TANK_SIZE, 
   BULLET_SIZE,
-  BLOCK_SIZE
+  BLOCK_SIZE,
+  LOWEST_POSITION,
+  LONGEST_POSITION
 } from './Constants';
 
 const isRectanglesCrashed = (rect1, rect2) =>
@@ -71,6 +73,7 @@ const isTankBlocked = (tank, map) => {
 
   return map.items.some(block => isTankBlockCrashed(tank, block));
 }
+
 
 export {
   getTankGunPosition,
