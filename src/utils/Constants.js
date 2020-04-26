@@ -8,7 +8,7 @@ export const TANK_SIZE = 50;
 
 export const BLOCK_SIZE = 25;
 
-export const BULLET_SIZE = 5;
+export const BULLET_SIZE = 10;
 
 export const EAGLE_SIZE = 50;
 
