@@ -52,11 +52,8 @@ class AutoTank {
     return false;
   }
 
-  /**
-   * It is allowed to move on the same direction for 4 sec
-   */
   canGoforward() {
-    return !this.blocked && !this.isAtEdge() && (Date.now() - this.lastTurn < 2000);
+    return !this.blocked && !this.isAtEdge();
   }
 
   getDirection() {
@@ -98,7 +95,7 @@ class AutoTank {
     }
   }
 
-  update(map, tank, eagle) {
+  update(map, tank, eagle, otherTanks) {
     this.shoot();
     this.direction = this.getDirection();
 
@@ -106,7 +103,7 @@ class AutoTank {
       case DIRECTION.UP:
         this.ref = AUTO_TANK_UP_REF.current;
         this.position.y -= this.speed;
-        if (isTankBlocked(this, map)) {
+        if (isTankBlocked(this, map, otherTanks)) {
           this.position.y += this.speed;
           this.blocked = true;
         }
@@ -114,7 +111,7 @@ class AutoTank {
       case DIRECTION.DOWN:
         this.ref = AUTO_TANK_DOWN_REF.current;
         this.position.y += this.speed;
-        if (isTankBlocked(this, map)) {
+        if (isTankBlocked(this, map, otherTanks)) {
           this.position.y -= this.speed;
           this.blocked = true;
         }
@@ -122,7 +119,7 @@ class AutoTank {
       case DIRECTION.LEFT:
         this.ref = AUTO_TANK_LEFT_REF.current;
         this.position.x -= this.speed;
-        if (isTankBlocked(this, map)) {
+        if (isTankBlocked(this, map, otherTanks)) {
           this.position.x += this.speed;
           this.blocked = true;
         }
@@ -130,7 +127,7 @@ class AutoTank {
       case DIRECTION.RIGHT:
         this.ref = AUTO_TANK_RIGHT_REF.current;
         this.position.x += this.speed;
-        if (isTankBlocked(this, map)) {
+        if (isTankBlocked(this, map, otherTanks)) {
           this.position.x -= this.speed;
           this.blocked = true;
         }

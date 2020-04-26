@@ -66,14 +66,21 @@ const getTankGunPosition = tank => {
   return {x, y};
 }
 
-const isTankBlocked = (tank, map) => {
-  if (!map || !map.items || map.items.length === 0) {
-    return false;
+const isTankBlocked = (tank, map, otherTanks) => {
+  let rv = false;
+
+  if (map && map.items && map.items.length > 0) {
+    rv = map.items.some(block => isTankBlockCrashed(tank, block));
   }
 
-  return map.items.some(block => isTankBlockCrashed(tank, block));
-}
+  if (rv) return rv;
 
+  if (otherTanks && otherTanks.length > 0) {
+    rv = otherTanks.some(ot => !ot.delete && ot !==tank && isTankTankCrashed(ot, tank));
+  }
+
+  return rv;
+}
 
 export {
   getTankGunPosition,

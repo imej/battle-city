@@ -41,7 +41,7 @@ class Tank {
       this.direction = DIRECTION.UP;
       this.ref = TANK_UP_REF.current;
       this.position.y -= this.speed; 
-      if (isTankBlocked(this, map)) {
+      if (isTankBlocked(this, map, null)) {
         this.position.y += this.speed; 
       }
       if (this.position.y < 0) {
@@ -51,7 +51,7 @@ class Tank {
       this.direction = DIRECTION.DOWN;
       this.ref = TANK_DOWN_REF.current;
       this.position.y += this.speed;
-      if (isTankBlocked(this, map)) {
+      if (isTankBlocked(this, map, null)) {
         this.position.y -= this.speed; 
       }
       if (this.position.y > LOWEST_POSITION) {
@@ -61,7 +61,7 @@ class Tank {
       this.direction = DIRECTION.LEFT;
       this.ref = TANK_LEFT_REF.current;
       this.position.x -= this.speed;
-      if (isTankBlocked(this, map)) {
+      if (isTankBlocked(this, map, null)) {
         this.position.x += this.speed; 
       }
       if (this.position.x < 0) {
@@ -71,7 +71,7 @@ class Tank {
       this.direction = DIRECTION.RIGHT;
       this.ref = TANK_RIGHT_REF.current;
       this.position.x += this.speed;
-      if (isTankBlocked(this, map)) {
+      if (isTankBlocked(this, map, null)) {
         this.position.x -= this.speed; 
       }
       if (this.position.x > LONGEST_POSITION) {
