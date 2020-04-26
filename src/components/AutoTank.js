@@ -98,7 +98,7 @@ class AutoTank {
     }
   }
 
-  update(map, tank) {
+  update(map, tank, eagle) {
     this.shoot();
     this.direction = this.getDirection();
 
@@ -143,11 +143,21 @@ class AutoTank {
       tank.die();
       this.die();
     }
+    
+    if (isTankTankCrashed(this, eagle)) {
+      eagle.die();
+      this.die();
+    }
 
     this.bullets.forEach(b => {
       if (!b.delete && isBulletTankCrashed(b, tank)) {
         b.die();
         tank.die();
+      }
+
+      if (!b.delete && isBulletTankCrashed(b, eagle)) {
+        b.die();
+        eagle.die();
       }
 
       if (!b.delete) {

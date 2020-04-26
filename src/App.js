@@ -13,6 +13,7 @@ import Tank from './components/Tank';
 import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
 import Map from './components/Map';
+import Eagle from './components/Eagle';
 
 const GAME_STATE = {
   START_SCREEN: 0,
@@ -43,6 +44,7 @@ class App extends Component {
     this.canvas = React.createRef();
 
     this.map = null;
+    this.eagle = null;
     
     this.tank1 = null;
     this.tank2 = null;
@@ -78,6 +80,7 @@ class App extends Component {
 
         this.map.update();
         this.map.render(this.state);
+        this.eagle.render(this.state);
 
         if (this.tank1) {
           this.tank1.update(keys, this.map, this.autoTankController.autoTanks);
@@ -101,7 +104,8 @@ class App extends Component {
 
   startGame() {
     this.map = new Map();
-
+    this.eagle = new Eagle( { onDie: () => this.lose()} );
+    
     this.tank1 = new Tank({
       speed: 2.5,
       position: {
@@ -114,7 +118,8 @@ class App extends Component {
     this.autoTankController = new AutoTankController({
       onAllDie: () => this.win(),
       map: this.map,
-      tank: this.tank1
+      tank: this.tank1,
+      eagle: this.eagle
     });
 
     this.setState({

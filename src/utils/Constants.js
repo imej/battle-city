@@ -10,6 +10,8 @@ export const BLOCK_SIZE = 25;
 
 export const BULLET_SIZE = 5;
 
+export const EAGLE_SIZE = 50;
+
 export const AUTO_TANK_SPEED = 1.5;
 
 export const BULLET_SPEED = 3;
@@ -37,4 +39,9 @@ export const COLOR = {
 export const BLOCK_TYPE = {
   BRICK: 0,
   STEEL: 1
+};
+
+export const EAGLE_POSITION = {
+  x: 300,
+  y: 650
 };

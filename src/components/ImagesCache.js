@@ -10,6 +10,7 @@ const AUTO_TANK_LEFT = "/images/auto-tank-left.png";
 const AUTO_TANK_RIGHT = "/images/auto-tank-right.png";
 const BRICK = "/images/brick.png";
 const STEEL = "/images/steel.png";
+const EAGLE = "/images/eagle.png";
 
 export const TANK_UP_REF = React.createRef();
 export const TANK_DOWN_REF = React.createRef();
@@ -21,6 +22,7 @@ export const AUTO_TANK_LEFT_REF = React.createRef();
 export const AUTO_TANK_RIGHT_REF = React.createRef();
 export const BRICK_REF = React.createRef();
 export const STEEL_REF = React.createRef();
+export const EAGLE_REF = React.createRef();
 
 function ImagesCache() {
   return (
@@ -35,6 +37,7 @@ function ImagesCache() {
       <img ref={AUTO_TANK_RIGHT_REF} src={AUTO_TANK_RIGHT} alt="tank up" style={{width:0, height:0}} />
       <img ref={BRICK_REF} src={BRICK} alt="brick" style={{width:0, height:0}} />
       <img ref={STEEL_REF} src={STEEL} alt="steel" style={{width:0, height:0}} />
+      <img ref={EAGLE_REF} src={EAGLE} alt="eagle" style={{width:0, height:0}} />
     </div>
   ); 
 }
