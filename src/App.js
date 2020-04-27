@@ -14,6 +14,7 @@ import ImagesCache from './components/ImagesCache';
 import AutoTankController from './components/AutoTankController';
 import Map from './components/Map';
 import Eagle from './components/Eagle';
+import TankCount from './components/TankCount';
 
 const GAME_STATE = {
   START_SCREEN: 0,
@@ -38,7 +39,9 @@ class App extends Component {
 
       context: null,
 
-      score: 0
+      score: 0,
+
+      autoTanksCount: 0,
     };
 
     this.canvas = React.createRef();
@@ -89,6 +92,11 @@ class App extends Component {
 
         this.autoTankController.update();
         this.autoTankController.render(this.state);
+        if (this.autoTankController.count !== this.state.count) {
+          this.setState({
+            autoTanksCount: this.autoTankController.count
+          });
+        }
 
         break;
       
@@ -116,6 +124,7 @@ class App extends Component {
     });
 
     this.autoTankController = new AutoTankController({
+      count: 20,
       onAllDie: () => this.win(),
       map: this.map,
       tank: this.tank1,
@@ -124,7 +133,8 @@ class App extends Component {
 
     this.setState({
       gameState: GAME_STATE.PLAYING,
-      score: 0
+      score: 0,
+      autoTanksCount: 20
     });
   }
 
@@ -162,7 +172,9 @@ class App extends Component {
         <canvas ref={this.canvas}
           width={this.state.screen.width * this.state.screen.ratio}
           height={this.state.screen.height * this.state.screen.ratio}
-        />  
+        />
+
+        { this.state.gameState === GAME_STATE.PLAYING && <TankCount count={this.state.autoTanksCount} />  } 
       </div>
     );
   }

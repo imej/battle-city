@@ -6,18 +6,17 @@ import {
 } from '../utils/Constants';
 import { isTankBlocked } from '../utils/Helper';
 
-const MAX_COUNT = 20; // The maximum number of tanks will be generated.
 const PRODUCING_FREQUENCY = 10000; // The ms between each tank appears
 const STARTING_POSITION = [
-  { x: SCREEN_WIDTH / 2 - TANK_SIZE / 2, y: 0 }, // center
+  { x: 0, y: 0 }, // left
   { x: SCREEN_WIDTH - TANK_SIZE, y: 0 }, // right
-  { x: 0, y: 0 } // left
+  { x: SCREEN_WIDTH / 2 - TANK_SIZE / 2, y: 0 } // center
 ];
 
 class AutoTankController {
-  constructor({ onAllDie, map, tank, eagle }) {
+  constructor({ count, onAllDie, map, tank, eagle }) {
     this.autoTanks = [];
-    this.count = 0;
+    this.count = count;
     this.lastProduction = 0;
     this.allDie = onAllDie;
     this.map = map;
@@ -26,13 +25,13 @@ class AutoTankController {
   }
 
   checkAllDie() {
-    if (this.count >= MAX_COUNT && this.autoTanks.length === 0) {
+    if (this.count === 0 && this.autoTanks.length === 0) {
       this.allDie();
     }
   }
 
   canProduce() {
-    return this.count < MAX_COUNT
+    return this.count > 0
            && Date.now() - this.lastProduction > PRODUCING_FREQUENCY
   }
 
@@ -52,7 +51,7 @@ class AutoTankController {
       // Only produce when there is no other auto tank on the spot.
       this.autoTanks.push(newTank);
 
-      this.count++;
+      this.count--;
       this.lastProduction = Date.now();
     }
   }
