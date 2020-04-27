@@ -18,7 +18,8 @@ import {
   isTankBlocked,
   isBulletBlockCrashed,
   isBulletTankCrashed,
-  isTankTankCrashed
+  isTankTankCrashed,
+  isBulletBulletCrashed
 } from '../utils/Helper';
 
 class AutoTank {
@@ -162,6 +163,15 @@ class AutoTank {
           if (isBulletBlockCrashed(b, i)) {
             b.die();
             i.die();
+          }
+        })
+      }
+
+      if (!b.delete) {
+        tank.bullets.forEach(tb => {
+          if (isBulletBulletCrashed(b, tb)) {
+            b.die();
+            tb.die();
           }
         })
       }
