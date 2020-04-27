@@ -22,6 +22,10 @@ const isBulletTankCrashed = (bullet, tank) =>
   isRectanglesCrashed({x: bullet.position.x, y: bullet.position.y, width: BULLET_SIZE, height: BULLET_SIZE},
     {x: tank.position.x, y: tank.position.y, width: TANK_SIZE, height: TANK_SIZE});
 
+const isBulletBulletCrashed = (bullet1, bullet2) => 
+  isRectanglesCrashed({x: bullet1.position.x, y: bullet1.position.y, width: BULLET_SIZE, height: BULLET_SIZE},
+    {x: bullet2.position.x, y: bullet2.position.y, width: BULLET_SIZE, height: BULLET_SIZE});
+
 /**
  * Intentionally make tank and block smaller, so the tank turns more easily.
  */
@@ -85,5 +89,6 @@ export {
   isBulletTankCrashed,
   isTankTankCrashed,
   isBulletBlockCrashed,
-  isTankBlocked
+  isTankBlocked,
+  isBulletBulletCrashed
 };
