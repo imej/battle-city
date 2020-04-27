@@ -1,4 +1,8 @@
-import { DIRECTION, BULLET_SIZE } from '../utils/Constants';
+import { 
+  DIRECTION, 
+  BULLET_SIZE,
+  BULLET_POINTER_FIX 
+} from '../utils/Constants';
 
 class Bullet {
   constructor({speed, position, direction, color}) {
@@ -7,6 +11,7 @@ class Bullet {
     this.delete = false;
     this.direction = direction;
     this.color = color;
+    this.arcCenter = {x: this.position.x, y: this.position.y};
   }
 
   die() {
@@ -17,15 +22,23 @@ class Bullet {
     switch(this.direction) {
       case DIRECTION.UP:
         this.position.y -= this.speed;
+        this.arcCenter.x = this.position.x + BULLET_SIZE/2;
+        this.arcCenter.y = this.position.y + BULLET_POINTER_FIX;
         break;
       case DIRECTION.DOWN:
         this.position.y += this.speed;
+        this.arcCenter.x = this.position.x + BULLET_SIZE/2;
+        this.arcCenter.y = this.position.y + BULLET_SIZE - BULLET_POINTER_FIX;
         break;
       case DIRECTION.LEFT:
         this.position.x -= this.speed;
+        this.arcCenter.x = this.position.x + BULLET_POINTER_FIX;
+        this.arcCenter.y = this.position.y + BULLET_SIZE/2;
         break;
       case DIRECTION.RIGHT:
         this.position.x += this.speed;
+        this.arcCenter.x = this.position.x + BULLET_SIZE - BULLET_POINTER_FIX;
+        this.arcCenter.y = this.position.y + BULLET_SIZE/2;
         break;
       default:
 
@@ -44,6 +57,13 @@ class Bullet {
     context.fillStyle = this.color;
     context.beginPath();
     context.rect(0, 0, BULLET_SIZE, BULLET_SIZE);
+    context.fill();
+    context.restore();
+
+    context.save();
+    context.fillStyle = this.color;
+    context.beginPath();
+    context.arc(this.arcCenter.x, this.arcCenter.y, BULLET_SIZE/2, 0, 2 * Math.PI);
     context.fill();
     context.restore();
   }

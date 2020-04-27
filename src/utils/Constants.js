@@ -10,6 +10,8 @@ export const BLOCK_SIZE = 25;
 
 export const BULLET_SIZE = 10;
 
+export const BULLET_POINTER_FIX = 4;
+
 export const EAGLE_SIZE = 50;
 
 export const AUTO_TANK_SPEED = 1.5;
