@@ -1,5 +1,5 @@
-import { EAGLE_POSITION } from '../utils/Constants';
-import { EAGLE_REF } from './ImagesCache';
+import { EAGLE_POSITION } from '../../utils/Constants';
+import { EAGLE_REF } from '../../utils/ImagesCache';
 
 class Eagle {
   

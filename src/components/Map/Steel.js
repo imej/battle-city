@@ -1,5 +1,5 @@
 import Block from './Block';
-import { STEEL_REF } from './ImagesCache';
+import { STEEL_REF } from '../../utils/ImagesCache';
 
 class Steel extends Block {
   constructor({position}) {

@@ -3,8 +3,8 @@ import {
   SCREEN_WIDTH, 
   TANK_SIZE,
   AUTO_TANK_SPEED
-} from '../utils/Constants';
-import { isTankBlocked } from '../utils/Helper';
+} from '../../utils/Constants';
+import { isTankBlocked } from '../../utils/Helper';
 
 const PRODUCING_FREQUENCY = 10000; // The ms between each tank appears
 const STARTING_POSITION = [

@@ -8,10 +8,10 @@ import {
 } from './utils/Constants';
 import InputManager from './utils/InputManager';
 import TitleScreen from './components/TitleScreen';
-import GameOver from './components/GameOver';
+import GameOver from './components/TitleScreen/GameOver';
 import Tank from './components/Tank';
-import ImagesCache from './components/ImagesCache';
-import AutoTankController from './components/AutoTankController';
+import ImagesCache from './utils/ImagesCache';
+import AutoTankController from './components/Tank/AutoTankController';
 import Map from './components/Map';
 import Eagle from './components/Eagle';
 import TankCount from './components/TankCount';

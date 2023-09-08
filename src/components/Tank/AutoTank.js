@@ -5,13 +5,13 @@ import {
   LONGEST_POSITION,
   BULLET_SPEED,
   AUTOTANK_SHOOT_FREQUENCY
-} from '../utils/Constants';
+} from '../../utils/Constants';
 import {
   AUTO_TANK_UP_REF, 
   AUTO_TANK_DOWN_REF, 
   AUTO_TANK_LEFT_REF, 
   AUTO_TANK_RIGHT_REF
-} from './ImagesCache';
+} from '../../utils/ImagesCache';
 import Bullet from './Bullet';
 import { 
   getTankGunPosition,
@@ -20,7 +20,7 @@ import {
   isBulletTankCrashed,
   isTankTankCrashed,
   isBulletBulletCrashed
-} from '../utils/Helper';
+} from '../../utils/Helper';
 
 class AutoTank {
   constructor({speed, position}) {

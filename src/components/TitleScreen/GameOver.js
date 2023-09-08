@@ -1,5 +1,5 @@
 import React from 'react';
-import './TitleScreen.css';
+import './index.css';
 
 const GameOver = ({msg}) => 
       <div>

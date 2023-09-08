@@ -1,4 +1,4 @@
-import { BLOCK_SIZE, BLOCK_TYPE } from '../utils/Constants';
+import { BLOCK_SIZE, BLOCK_TYPE } from '../../utils/Constants';
 import Brick from './Brick';
 import Steel from './Steel';
 

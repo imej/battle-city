@@ -5,20 +5,20 @@ import {
   COLOR,
   BULLET_SPEED,
   TANK_SHOOT_FREQUENCY
-} from '../utils/Constants';
+} from '../../utils/Constants';
 import {
   TANK_UP_REF, 
   TANK_DOWN_REF, 
   TANK_LEFT_REF, 
   TANK_RIGHT_REF
-} from './ImagesCache';
+} from '../../utils/ImagesCache';
 import Bullet from './Bullet';
 import { 
   getTankGunPosition,
   isTankBlocked,
   isBulletTankCrashed,
   isBulletBlockCrashed
-} from '../utils/Helper';
+} from '../../utils/Helper';
 
 class Tank {
   constructor({speed, position, onDie}) {

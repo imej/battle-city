@@ -1,5 +1,5 @@
 import Block from './Block';
-import { BRICK_REF } from './ImagesCache';
+import { BRICK_REF } from '../../utils/ImagesCache';
 
 class Brick extends Block {
   constructor({position}) {

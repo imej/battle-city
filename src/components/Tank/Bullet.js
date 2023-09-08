@@ -2,7 +2,7 @@ import {
   DIRECTION, 
   BULLET_SIZE,
   BULLET_POINTER_FIX 
-} from '../utils/Constants';
+} from '../../utils/Constants';
 
 class Bullet {
   constructor({speed, position, direction, color}) {
