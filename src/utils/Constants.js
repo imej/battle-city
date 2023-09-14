@@ -47,3 +47,9 @@ export const EAGLE_POSITION = {
   x: 300,
   y: 650
 };
+
+export const GAME_STATE = {
+  START_SCREEN: 0,
+  PLAYING: 1,
+  GAME_OVER: 2
+};

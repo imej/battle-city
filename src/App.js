@@ -4,7 +4,8 @@ import {
   SCREEN_WIDTH, 
   SCREEN_HEIGHT, 
   RATIO, 
-  LOWEST_POSITION
+  LOWEST_POSITION,
+  GAME_STATE,
 } from './utils/Constants';
 import InputManager from './utils/InputManager';
 import TitleScreen from './components/TitleScreen';
@@ -15,12 +16,6 @@ import AutoTankController from './components/Tank/AutoTankController';
 import Map from './components/Map';
 import Eagle from './components/Eagle';
 import TankCount from './components/TankCount';
-
-const GAME_STATE = {
-  START_SCREEN: 0,
-  PLAYING: 1,
-  GAME_OVER: 2
-};
 
 class App extends Component {
   constructor(props) {
