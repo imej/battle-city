@@ -1,4 +1,6 @@
 import { 
+  SCREEN_WIDTH, 
+  SCREEN_HEIGHT,
   DIRECTION, 
   BULLET_SIZE,
   BULLET_POINTER_FIX 
@@ -46,8 +48,8 @@ class Bullet {
   }
 
   render(state) {
-    if (this.position.x > state.screen.width || this.position.x < 0
-      || this.position.y > state.screen.height || this.position.y < 0 ) {
+    if (this.position.x > SCREEN_WIDTH || this.position.x < 0
+      || this.position.y > SCREEN_HEIGHT || this.position.y < 0 ) {
       this.die();
     }
 

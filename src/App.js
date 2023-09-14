@@ -24,12 +24,6 @@ class App extends Component {
     this.state = {
       input: new InputManager(),
 
-      screen: {
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT,
-        ratio: RATIO
-      },
-
       gameState: GAME_STATE.START_SCREEN,
 
       context: null,
@@ -112,7 +106,7 @@ class App extends Component {
     this.tank1 = new Tank({
       speed: 2.5,
       position: {
-        x: this.state.screen.width / 2 - 100,
+        x: SCREEN_WIDTH / 2 - 100,
         y: LOWEST_POSITION
       },
       onDie: () => this.lose()
@@ -150,8 +144,8 @@ class App extends Component {
   clearBackground() {
     const context = this.state.context;
     context.save();
-    context.scale(this.state.screen.ratio, this.state.screen.ratio);
-    context.fillRect(0, 0, this.state.screen.width, this.state.screen.height);
+    context.scale(RATIO, RATIO);
+    context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     context.globalAlpha = 1;
   }
 
@@ -165,8 +159,8 @@ class App extends Component {
         { this.state.gameState === GAME_STATE.GAME_OVER && <GameOver msg={this.congras} /> }
 
         <canvas ref={this.canvas}
-          width={this.state.screen.width * this.state.screen.ratio}
-          height={this.state.screen.height * this.state.screen.ratio}
+          width={SCREEN_WIDTH * RATIO}
+          height={SCREEN_HEIGHT * RATIO}
         />
 
         { this.state.gameState === GAME_STATE.PLAYING && <TankCount count={this.state.autoTanksCount} />  } 
